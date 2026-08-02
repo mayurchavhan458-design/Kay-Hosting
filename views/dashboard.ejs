@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>KAY HOST - <%= currentServer.name %></title>
+  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <script>window.SERVER_ID = "<%= currentServer.id %>";</script>
+  <div class="sidebar-overlay" id="overlay" onclick="toggleMenu()"></div>
+  
+  <div class="sidebar" id="sidebar">
+    <h3 class="brand-name">KAY HOST</h3>
+    <a href="/create-server" class="btn btn-primary" style="width:100%; text-align:center; margin-top:15px;">+ Create Instance</a>
+    
+    <div class="section-label">Server List</div>
+    <% servers.forEach(s => { %>
+      <a href="/server/<%= s.id %>" class="server-item <%= s.id === currentServer.id ? 'active' : '' %>">
+        <span><%= s.name %></span>
+        <small style="color:var(--text-muted)">:<%= s.port %></small>
+      </a>
+    <% }) %>
+
+    <div class="section-label">Server Options</div>
+    <ul class="sidebar-menu">
+      <li><a href="/server/<%= currentServer.id %>" class="active">Console</a></li>
+      <li><a href="/server/<%= currentServer.id %>/files">Files Option</a></li>
+      <li><a href="/logout" style="color:var(--danger)">Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="navbar">
+    <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+    <div class="brand-name"><%= currentServer.name %></div>
+  </div>
+
+  <div class="main-content">
+    <div class="controls">
+      <button class="btn btn-start" onclick="sendAction('START')">Start</button>
+      <button class="btn btn-stop" onclick="sendAction('STOP')">Stop</button>
+      <button class="btn btn-restart" onclick="sendAction('RESTART')">Restart</button>
+      <span class="status-badge <%= status %>" id="status-badge"><%= status %></span>
+    </div>
+
+    <div class="console-container" id="console"></div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>KAY HOST - Files</title>
+  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <script>window.SERVER_ID = "<%= currentServer.id %>";</script>
+  <div class="sidebar-overlay" id="overlay" onclick="toggleMenu()"></div>
+
+  <div class="sidebar" id="sidebar">
+    <h3 class="brand-name">KAY HOST</h3>
+    <a href="/create-server" class="btn btn-primary" style="width:100%; text-align:center; margin-top:15px;">+ Create Instance</a>
+    
+    <div class="section-label">Server List</div>
+    <% servers.forEach(s => { %>
+      <a href="/server/<%= s.id %>" class="server-item <%= s.id === currentServer.id ? 'active' : '' %>">
+        <span><%= s.name %></span>
+      </a>
+    <% }) %>
+
+    <div class="section-label">Server Options</div>
+    <ul class="sidebar-menu">
+      <li><a href="/server/<%= currentServer.id %>">Console</a></li>
+      <li><a href="/server/<%= currentServer.id %>/files" class="active">Files Option</a></li>
+      <li><a href="/logout" style="color:var(--danger)">Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="navbar">
+    <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+    <div class="brand-name">Files - <%= currentServer.name %></div>
+  </div>
+
+  <div class="main-content">
+    <div class="card">
+      <div style="display:flex; gap:10px; margin-bottom:20px;">
+        <form action="/server/<%= currentServer.id %>/files/upload" method="POST" enctype="multipart/form-data">
+          <input type="file" name="file" id="file-input" multiple style="display:none;" onchange="this.form.submit()">
+          <button type="button" class="btn btn-start" onclick="document.getElementById('file-input').click()">Upload File</button>
+        </form>
+        <button class="btn btn-stop" onclick="deleteSelectedFiles()">Delete Selected</button>
+      </div>
+
+      <table class="file-table">
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Name</th>
+            <th>Size</th>
+            <th>Modified</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (files.length === 0) { %>
+            <tr><td colspan="4" style="text-align:center; color:var(--text-muted);">No files uploaded yet.</td></tr>
+          <% } %>
+          <% files.forEach(f => { %>
+            <tr>
+              <td><input type="checkbox" class="file-checkbox" value="<%= f.name %>"></td>
+              <td><%= f.name %></td>
+              <td><%= f.size %></td>
+              <td><%= f.updated %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

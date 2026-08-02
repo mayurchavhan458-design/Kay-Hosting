@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>KAY HOST - Create Server</title>
+  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="sidebar-overlay" id="overlay" onclick="toggleMenu()"></div>
+  <div class="sidebar" id="sidebar">
+    <h3 class="brand-name">KAY HOST</h3>
+    <a href="/create-server" class="btn btn-primary" style="width:100%; text-align:center; margin-top:15px;">+ Create Instance</a>
+    <div class="section-label">Your Servers</div>
+    <% servers.forEach(s => { %>
+      <a href="/server/<%= s.id %>" class="server-item">
+        <span><%= s.name %></span>
+        <small style="color:var(--text-muted)"><%= s.port %></small>
+      </a>
+    <% }) %>
+  </div>
+
+  <div class="navbar">
+    <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+    <div class="brand-name">KAY HOST</div>
+  </div>
+
+  <div class="main-content">
+    <div class="card" style="max-width:500px; margin:auto;">
+      <h2 style="margin-bottom:20px;">Deploy New Server</h2>
+      <form action="/create-server" method="POST">
+        <div class="form-group">
+          <label>Server Name</label>
+          <input type="text" name="name" placeholder="e.g. MY SERVER" required>
+        </div>
+        <div class="form-group">
+          <label>Internal Port</label>
+          <input type="number" name="assignedPort" value="3000" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Create Instance</button>
+      </form>
+    </div>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>

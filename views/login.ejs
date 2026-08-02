@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>KAY HOST - Authentication</title>
+  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="display:flex; justify-content:center; align-items:center; height:100vh;">
+  <div class="card" style="width:100%; max-width:380px;">
+    <h1 style="text-align:center; margin-bottom:6px;" class="brand-name">KAY HOST</h1>
+    <p style="text-align:center; font-size:11px; color:var(--text-muted); margin-bottom:24px; letter-spacing:1px;">CYBERPANEL SYSTEM ACCESS</p>
+    <% if (error) { %><p style="color:var(--danger); text-align:center; margin-bottom:15px; font-size:13px;"><%= error %></p><% } %>
+    <form action="/login" method="POST">
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" name="username" required autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;">LOGIN SYSTEM</button>
+    </form>
+  </div>
+</body>
+</html>
